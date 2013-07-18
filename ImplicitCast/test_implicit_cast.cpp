@@ -15,6 +15,9 @@ void test(void)
 
 	// 2147483648 -> We have to cast each member to the widest data type.
 	long long l4 = static_cast<long long>(std::numeric_limits<int>::max()) + 1;
+
+	// 4294967295
+	long long l5 = std::numeric_limits<unsigned int>::max();
 }
 
 int main(void)
