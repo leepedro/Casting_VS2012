@@ -5,6 +5,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SafeCast", "SafeCast\SafeCa
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ImplicitCast", "ImplicitCast\ImplicitCast.vcxproj", "{99001E87-1471-41A1-AF7C-B30064370A55}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DataRange", "DataRange\DataRange.vcxproj", "{0D61ED92-C583-46FA-A076-6A16F28D0BFF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -19,6 +21,10 @@ Global
 		{99001E87-1471-41A1-AF7C-B30064370A55}.Debug|Win32.Build.0 = Debug|Win32
 		{99001E87-1471-41A1-AF7C-B30064370A55}.Release|Win32.ActiveCfg = Release|Win32
 		{99001E87-1471-41A1-AF7C-B30064370A55}.Release|Win32.Build.0 = Release|Win32
+		{0D61ED92-C583-46FA-A076-6A16F28D0BFF}.Debug|Win32.ActiveCfg = Debug|Win32
+		{0D61ED92-C583-46FA-A076-6A16F28D0BFF}.Debug|Win32.Build.0 = Debug|Win32
+		{0D61ED92-C583-46FA-A076-6A16F28D0BFF}.Release|Win32.ActiveCfg = Release|Win32
+		{0D61ED92-C583-46FA-A076-6A16F28D0BFF}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
