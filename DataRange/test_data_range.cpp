@@ -26,7 +26,8 @@ void test1(void)
 	float f_max_neg = -f_max;
 
 	if (f_min > 0)
-		std::cout << "f_min > 0 !!!" << std::endl;	// !!!! The minimum float value is POSITIVE!!!
+		std::cout << "f_min(=" << f_min << ") > 0 !!!" << std::endl;	// !!!! The minimum float value is POSITIVE!!!
+	int int_f_min(static_cast<int>(f_min));		// == 0 !!!
 
 	std::cout << "int: " << i_min << " ~ " << i_max << std::endl;
 	std::cout << "float: " << f_max_neg << " ~ " << f_min << " ~ " << f_max << std::endl;
