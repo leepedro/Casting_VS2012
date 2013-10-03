@@ -1,0 +1,82 @@
+Source: 'Type Conversions and Type Safety' in MSDN.
+http://msdn.microsoft.com/en-us/library/hh279667.aspx
+
+1. Implicit type conversions
+Compilers are capable of some conversions.
+Some conversions are completely safe, while some conversions are risky.
+Compilers do not throw warnings on safe conversions. (Good)
+Compilers throw warnings on some risky conversions (Okay) while it does NOT throw warnings on
+some risky conversions (BAD!).
+
+1-1. Widening conversions (promotion) (identical signed type only) 
+Widening conversions are safe, so NO action is required.
+a) src == integral && src != long long && dst == double
+ dst must be double instead of float.
+ For example, int to float is NOT safe.
+b) src == bool || src == char
+ dst could be any built-in types.
+c) src == integral && dst == integral && (src == signed != dst == unsigned) && sizeof(srcT) <= sizeof(dstT)
+d) src == float && dst == double
+
+1-2. Narrowing conversions (coercion) (identical signed type only)
+Compilers always throw warnings for possible loss of data (Okay).
+-> Do run-time check for overflow, underflow, range error.
+-> If so, throw underflow, overflow, range errors.
+-> If not, silence the compiler warnings by calling static_cast<T>.
+-> Implement this as SafeCast<dstT>(src) as it is not really a converting but a casting.
+a) src == integral && dst == integral && (src == signed != dst == unsigned) && sizeof(srcT) > sizeof(dstT)
+ if src < static_cast<srcT>(dstT::min)
+  throw underflow_error
+ else if src > static_cast<srcT>(dstT::max)
+  throw overflow_error
+ else
+  return static_cast<dstT>(src)
+
+b) src == double && dst == float
+ if src > static_cast<double>(float::max) || src < -static_cast<double>(float::max)
+  throw range_error
+ else
+  return static_cast<dstT>(src)
+
+1-3. Signed-unsigned conversions (integral with identical data width only)
+The data value in the variable is not actually being changed but interpreted differently
+depending on the declared data type.
+Compilers do NOT warn this risk (BAD! BAD! BAD!).
+-> Do run-time check if src is within the range of dstT.
+-> If so, convert it implicitly.
+-> If not, throw underflow, overflow, range errors.
+-> Implement this as SafeConvert<dstT>(src) as it is not a casting but a conversion.
+a) src == signed integral && dst == unsigned integral && sizeof(srcT) == sizeof(dstT)
+ if src < 0
+  throw a runtime_error or an underflow_error.
+   (This is an underflow without actually underflowing.)
+ else
+  return src
+
+b) src == unsigned integral && dst == signed integral && sizeof(srcT) == sizeof(dstT)
+ if src > static_cast<srcT>(dstT::max)
+  throw a runtime_error or an overflow_error.
+   (This is an overflow without actually overflowing.)
+ else
+  return src
+
+NOTE: One conversion may consists of multiple steps.
+For example, unsigned int -> short should be implemented as unsigned int -> int -> short or
+unsigned int -> unsigned short -> short.
+ -> Which order?
+
+2. Explicit type conversions (casting)
+Compilers always throw warnings for possible loss of data (Okay).
+2-1. Floating point to signed integral type, src == floating && dst == signed integer
+Compilers cut off (floor) source value.
+-> Use round() and implement this as RoundAs<dstT>(src).
+-> Do run-time check if round(src) is within the range of dstT.
+-> If so, throw underflow, overflow error.
+-> If not, silence the compiler warnings by calling static_cast<T>.
+ if round(src) < static_cast<srcT>(dstT::min)
+  throw underflow_error
+ else if round(src) > static_cast<srcT>(dstT::max)
+  throw overflow_error
+ else
+  return static_cast<dstT>(round(src))
+ 
