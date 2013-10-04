@@ -65,10 +65,10 @@ b) src == unsigned && dst == signed
  else
   return src
 
-NOTE: One conversion may consists of multiple steps.
-For example, unsigned int -> short should be implemented as unsigned int -> int -> short or
-unsigned int -> unsigned short -> short.
- -> Which order?
+NOTE: The conversions not directly supported by this method can still be done by
+automatically going through implicit conversion.
+For example, unsigned int -> short can be automatically implemented as unsigned int -> int ->
+short because unsigned int to int is an implicit conversion.
 
 2. Explicit type conversions (casting)
 Compilers always throw warnings for possible loss of data (Okay).
@@ -85,7 +85,8 @@ Compilers always throw warnings for possible loss of data (Okay).
  else
   return static_cast<dstT>(src)
 
-NOTE: float -> int can be implemented as float -> double -> int.
+NOTE: float -> int can be automatically implemented as float -> double -> int because float
+to double is an implicit conversion.
 NOTE: This cut off (floor) source value.
 NOTE: RoundAs<dstT>(src) can be implemented as SafeCast<dstT>(round(src))
  
